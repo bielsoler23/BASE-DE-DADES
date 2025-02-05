@@ -125,15 +125,15 @@ funció del valor del salari
 ```sql
 
 ```
-28. Llista el codi dels departaments dels empleats que apareixen a la taula empleats.
+26. Llista el codi dels departaments dels empleats que apareixen a la taula empleats.
 ```sql
 
 ```
-29. Partint de la consulta anterior elimina els codis de departament repetits.
+27. Partint de la consulta anterior elimina els codis de departament repetits.
 ```sql
 
 ```
-30. Calcula el nombre d'empleats que **no tenen** comissió assignada.
+28. Calcula el nombre d'empleats que **no tenen** comissió assignada.
 ```sql
 
 ```
@@ -141,23 +141,101 @@ funció del valor del salari
 ## 1.2.4 Consultes sobre una taula utilitzant agrupaments
 
 1. Quants empleats van ser contractats l'any passat.
+```sql
+SELECT count(*) AS quants
+	FROM empleats
+WHERE YEAR(data_contractacio) = YEAR(curdate()) - 1;
+```
 2. Quin és el treballador (nº d’anys no el nom del treballador) amb més anys d'antiguitat.
+```sql
+SELECT MAX(timestampdiff(YEAR,data_contractacio, curdate())) AS anys_antiguitat
+	FROM empleats;
+-- ORDER BY anys_antiguitat DESC
+-- LIMIT 1;
+```
 3. Quin és el treballador(nº d’anys no el nom del treballador) amb menys anys d'antiguitat.
-4. Quin és el salari mig de l'empresa
-5. Mostra el salari més alt i el més baix dels empleats. Anomena les columnes com a "salari_max" i "salari_min" respectivament.
-6. Mostra la mitjana dels salaris i el número d’empleats que tenim. Arrodoneix la mitjana al número enter més pròxim i anomena les columnes com a salari_mig i num_empleats respectivament.
-7. Mostra, per cada tipus de treball, la mitjana dels salaris. Ordena la informació per tipus de treball.
-8. Quants empleats tenim assignats a cada tipus de treball? Ordena la informació per número d’empleats.
-9. Quants empleats tenim assignats a cada departament? Mostra el  codi de departament i el número d’empleats que té. Ordena la informació per número d’empleats.
-10. Partint de la consulta anterior, volem saber també quants empleats no tenen departament assignat. Mostra el text "No assignat" com a identificador del departament.
-11. Quants directors (caps) diferents tenim? Anomena la columna com a "numero_de_directors"
-12. Fes una consulta per calcular la diferència que hi  ha entre el salari màxim i el mínim dels empleats. Anomena la columna com a "diferencia".
-13. Mostra, per cada cap, el número identificador de l’empleat (com a cap) i el salari de l’empleat pitjor pagat per a aquest cap. Exclou els empleats  que no tinguin assignat cap.
-14. Partint de la consulta anterior, exclou també aquells caps en què el salari mínim sigui inferior o igual a 6.000.
-15. Obté el número d’empleats contractats per cada any. Ordena la informació per any.
-16. Mostra els codis de departament que tenen 3 o més empleats. Mostra només el codi del departament.
-17. Mostra el nombre d'empleats que cobren més de 9.000 euros.
+```sql
+SELECT MIN(timestampdiff(YEAR,data_contractacio, curdate())) AS anys_antiguitat
+	FROM empleats;
+-- ORDER BY anys_antiguitat ASC
+-- LIMIT 1;
 
+```
+4. Quin és el salari mig de l'empresa
+```sql
+SELECT AVG(salari) AS salari_mig
+	FROM empleats;
+```
+5. Mostra el salari més alt i el més baix dels empleats. Anomena les columnes com a "salari_max" i "salari_min" respectivament.
+```sql
+SELECT MAX(salari) AS salari_max, MIN(salari) AS salari_min
+    FROM empleats;
+```
+6. Mostra la mitjana dels salaris i el número d’empleats que tenim. Arrodoneix la mitjana al número enter més pròxim i anomena les columnes com a salari_mig i num_empleats respectivament.
+```sql
+SELECT ROUND(AVG(salari),0) AS salari_mig, COUNT(*) AS num_empleats
+	FROM empleats;
+```
+7. Mostra, per cada tipus de treball, la mitjana dels salaris. Ordena la informació per tipus de treball.
+```sql
+SELECT feina_codi, AVG(salari)
+	FROM empleats
+GROUP BY feina_codi;
+```
+8. Quants empleats tenim assignats a cada tipus de treball? Ordena la informació per número d’empleats.
+```sql
+SELECT COUNT(*) AS quantitat, feina_codi
+	FROM empleats
+GROUP BY feina_codi
+ORDER BY quantitat;
+```
+9. Quants empleats tenim assignats a cada departament? Mostra el  codi de departament i el número d’empleats que té. Ordena la informació per número d’empleats.
+```sql
+SELECT departament_id, COUNT(*) AS quantitat
+	FROM empleats
+GROUP BY departament_id
+ORDER BY quantitat;
+```
+10. Partint de la consulta anterior, volem saber també quants empleats no tenen departament assignat. Mostra el text "No assignat" com a identificador del departament.
+```sql
+SELECT ifnull(departament_id,"No assignat") AS departament_id, COUNT(*) AS quantitat
+	FROM empleats
+GROUP BY departament_id
+ORDER BY quantitat;
+```
+11. Quants directors (caps) diferents tenim? Anomena la columna com a "numero_de_directors"
+```sql
+SELECT DISTINCT count(id_cap) AS numero_directors 
+	FROM empleats;
+```
+12. Fes una consulta per calcular la diferència que hi  ha entre el salari màxim i el mínim dels empleats. Anomena la columna com a "diferencia".
+```sql
+SELECT MAX(salari) AS salari_max, MIN(salari) AS salari_min, MAX(salari) - MIN(salari) AS diferencia
+    FROM empleats;
+```
+13. Mostra, per cada cap, el número identificador de l’empleat (com a cap) i el salari de l’empleat pitjor pagat per a aquest cap. Exclou els empleats  que no tinguin assignat cap.
+```sql
+SELECT id_cap, MIN(salari)
+	FROM empleats
+WHERE id_cap IS NOT NULL
+GROUP BY id_cap;
+```
+14. Partint de la consulta anterior, exclou també aquells caps en què el salari mínim sigui inferior o igual a 6.000.
+```sql
+
+```
+15. Obté el número d’empleats contractats per cada any. Ordena la informació per any.
+```sql
+
+```
+16. Mostra els codis de departament que tenen 3 o més empleats. Mostra només el codi del departament.
+```sql
+
+```
+17. Mostra el nombre d'empleats que cobren més de 9.000 euros.
+```sql
+
+```
 
 ## 1.2.5 Consultes multitaula (JOINs)
 
