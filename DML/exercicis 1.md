@@ -222,19 +222,31 @@ GROUP BY id_cap;
 ```
 14. Partint de la consulta anterior, exclou també aquells caps en què el salari mínim sigui inferior o igual a 6.000.
 ```sql
-
+SELECT id_cap, MIN(salari) AS min_salari
+	FROM empleats
+WHERE id_cap IS NOT NULL
+GROUP BY id_cap
+HAVING min_salari > 6000;
 ```
 15. Obté el número d’empleats contractats per cada any. Ordena la informació per any.
 ```sql
-
+SELECT YEAR(data_contractacio) AS any, COUNT(*) AS quantitat
+	FROM empleats
+GROUP BY any;
 ```
 16. Mostra els codis de departament que tenen 3 o més empleats. Mostra només el codi del departament.
 ```sql
-
+SELECT departament_id
+	FROM empleats
+WHERE departament_id IS NOT NULL
+GROUP BY departament_id
+HAVING COUNT(*) >= 3;
 ```
 17. Mostra el nombre d'empleats que cobren més de 9.000 euros.
 ```sql
-
+SELECT COUNT(*)
+	FROM empleats
+WHERE salari > 9000;
 ```
 
 ## 1.2.5 Consultes multitaula (JOINs)
