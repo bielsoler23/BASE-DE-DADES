@@ -252,17 +252,58 @@ WHERE salari > 9000;
 ## 1.2.5 Consultes multitaula (JOINs)
 
 1. Calcula el nombre d' empleats que treballen en cadascun dels departaments. El resultat d' aquesta consulta també ha d' incloure aquells departaments que no tenen cap empleat associat.
+```sql
+SELECT d.nom, COUNT(e.empleat_id) AS quantitat
+	FROM empleats e
+	RIGHT JOIN departaments d ON e.departament_id = d.departament_id
+GROUP BY d.departament_id;
+```
 2. ----Retorna un llistat amb els empleats i les dades dels departaments on treballa cadascú.
+```sql
+
+```
 3. Retorna un llistat amb els empleats i les dades dels departaments on treballa cadascú. Ordena el resultat, en primer lloc pel nom del departament (en ordre alfabètic) i en segon lloc pels cognoms i el nom dels empleats.
+```sql
+SELECT d.departament_id, d.nom
+	FROM departaments AS d
+    INNER JOIN empleats AS e ON e.departament_id = d.departament_id;
+```
 4. Retorna un llistat amb el codi i el nom del departament, només d' aquells departaments que tenen empleats.
+```sql
+
+```
 5. Retorna un llistat amb el codi, el nom del departament i el valor del pressupost actual de què disposa, només d' aquells departaments que tenen empleats. El valor del pressupost actual el pot calcular restant al valor del pressupost inicial (columna pressupost) el valor de les despeses que ha generat (columna despeses).
+```sql
+
+```
 6. Retorna el nom del departament on treballa l' empleat que té el nif 38382980M.
+```sql
+
+```
 7. Retorna el nom del departament on treballa l'empleat Pepe Ruiz Santana.
+```sql
+
+```
 8. Retorna un llistat amb les dades dels empleats que treballen al departament d' R + D. Ordena el resultat alfabèticament.
+```sql
+
+```
 9. Retorna un llistat amb les dades dels empleats que treballen al departament de Sistemes, Comptabilitat o R + D. Ordena el resultat alfabèticament.
+```sql
+
+```
 10. Retorna una llista amb el nom dels empleats que tenen els departaments que **no** tenen un pressupost entre 100000 i 200000 euros.
+```sql
+
+```
 11. Retorna un llistat amb el nom dels departaments on hi ha algun empleat el segon cognom del qual sigui NULL. Tingui en compte que no ha de mostrar noms de departaments que estiguin repetits.
+```sql
+
+```
 12. Mostra el nombre d'empleats que hi ha a cada departament. Has de retornar dues columnes, una amb el nom del departament i una altra amb el nombre d'empleats que té assignats.
+```sql
+
+```
 ----
 1. Retorna un llistat amb **tots els empleats** juntament amb les dades dels departaments on treballen. Aquest llistat també ha d' incloure els empleats que no tenen cap departament associat.
 2. Retorna un llistat on només apareguin aquells empleats que no tenen cap departament associat.
