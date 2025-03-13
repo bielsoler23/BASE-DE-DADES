@@ -1,4 +1,5 @@
 ## SUBCONSULTES
+[base de dades per fer els exercicis](https://github.com/bielsoler23/M02-Base-de-dades/tree/main/.sql/bbdd_rrhh.sql)
 
 1. Obtenir el id_empleat, nom i salari dels empleats que tenen el mateix salari que l'empleat ‘Pat Fay’.
 ```sql
