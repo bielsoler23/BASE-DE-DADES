@@ -1,33 +1,51 @@
 ## SUBCONSULTES
-[base de dades per fer els exercicis](https://github.com/bielsoler23/M02-Base-de-dades/tree/main/.sql/bbdd_rrhh.sql)
+[bdd](https://github.com/bielsoler23/M02-Base-de-dades/tree/main/.sql/bbdd_rrhh.sql) per fer els exercicis
 
 1. Obtenir el id_empleat, nom i salari dels empleats que tenen el mateix salari que l'empleat ‘Pat Fay’.
 ```sql
+SELECT empleat_id, nom, salari
+  FROM empleats
+WHERE salari = (SELECT salari FROM empleats WHERE nom = 'Pat' AND cognoms = 'Fay');
 
 ```
 2. Obtenir el id_empleat, nom i salari dels empleats que tenen un salari superior al de l'empleat ‘Pat Fay’.
 ```sql
-
+SELECT empleat_id, nom, salari
+  FROM empleats
+WHERE salari > (SELECT salari FROM empleats WHERE nom = "Pat" AND cognoms = "Fay");
 ```
 3. Obtenir el id_empleat, cognoms i codi departament dels empleats que treballen en el mateix departament que l'empleat ‘Pat Fay’.
 ```sql
-
+SELECT empleat_id, cognoms, departament_id
+  FROM empleats
+WHERE departament_id = (SELECT departament_id FROM empleats WHERE nom = "Pat" AND cognoms = "Fay");
 ```
 4. Obté el id_empleat, nom i salari dels empleats que guanyen més del departament de ‘Vendes’.
 ```sql
+SELECT empleat_id, nom, salari
+  FROM empleats
+WHERE salari > (SELECT MAX(salari) FROM empleats WHERE departament_id = (SELECT departament_id FROM departaments WHERE nom = 'Vendes'));
 
 ```
 5. Obté el id_empleat, nom i salari dels empleats que guanyen menys del departament de ‘Vendes’.
 ```sql
+SELECT empleat_id, nom, salari
+  FROM empleats
+WHERE salari > (SELECT MIN(salari) FROM empleats WHERE departament_id = (SELECT departament_id FROM departaments WHERE nom = 'Vendes'));
 
 ```
 6. Obté el id_empleat, nom i salari dels empleats del departament de ‘Compres’ que guanyen més que la mitjana d’aquest departament.
 ```sql
+SELECT empleat_id, nom, salari
+  FROM empleats
+WHERE salari > (SELECT AVG(salari) FROM empleats WHERE departament_id = (SELECT departament_id FROM departaments WHERE nom = 'Compres'));
 
 ```
 7. Obté el nom, cognom i data de contractació dels empleats que van ser contractats després de l'empleat ‘Pat Fay’. Ordena per data de contractació.
 ```sql
-
+SELECT nom, cognoms, data_contractacio
+  FROM empleats
+WHERE data_contractacio > (SELECT data_contractacio FROM empleats WHERE nom = "Pat" AND cognoms = "Fay");
 ```
 8. Volem saber els cognoms, salari i codi de departament dels empleats que guanyen més que la mitjana dels salaris del departament ‘Compres’. Exlou els que siguin d’aquest departament.
 ```sql
