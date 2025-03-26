@@ -49,15 +49,37 @@ WHERE data_contractacio > (SELECT data_contractacio FROM empleats WHERE nom = "P
 ```
 8. Volem saber els cognoms, salari i codi de departament dels empleats que guanyen més que la mitjana dels salaris del departament ‘Compres’. Exlou els que siguin d’aquest departament.
 ```sql
-
+SELECT e.cognoms, e.salari, e.departament_id
+FROM empleats e
+WHERE e.salari > (
+    SELECT AVG(salari)
+    FROM empleats
+    WHERE departament_id = (SELECT departament_id FROM departaments WHERE nom = "Compres")
+)
+AND e.departament_id != (SELECT departament_id FROM departaments WHERE nom = "Compres");
 ```
 9. Partint de la consulta anterior, volem saber també el nom del departament dels empleats. Ordena per salari.
 ```sql
-
+SELECT e.cognoms, e.salari, e.departament_id, d.nom AS departament
+FROM empleats e
+JOIN departaments d ON e.departament_id = d.departament_id
+WHERE e.salari > (
+    SELECT AVG(salari)
+    FROM empleats
+    WHERE departament_id = (SELECT departament_id FROM departaments WHERE nom = 'Compres')
+)
+AND e.departament_id != (SELECT departament_id FROM departaments WHERE nom = 'Compres')
+ORDER BY e.salari;
 ```
 10. Volem saber el codi, nom i cognom del jefe de l'empleat 103. Utilitza l'operador IN.
 ```sql
-
+SELECT empleat_id, nom, cognoms
+FROM empleats
+WHERE empleat_id IN (
+    SELECT id_cap
+      FROM empleats
+    WHERE empleat_id = 103
+);
 ```
 11. Quins departaments no tenim empleats? Mostra el codi i nom de departament. Utilitza l'operador NOT IN.
 ```sql
