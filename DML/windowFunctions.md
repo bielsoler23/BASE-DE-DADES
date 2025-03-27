@@ -1,5 +1,5 @@
 ## CTE i Window Function
-[bdd](https://github.com/bielsoler23/M02-Base-de-dades/tree/main/.sql/bbdd_rrhh.sql) per fer els exercicis
+[bdd](https://github.com/bielsoler23/BASE-DE-DADES/tree/main/.sql/bbdd_rrhh.sql) per fer els exercicis
 
 1. Fes un Time Series. Que mostri per cada fila la data complerta del mes de gener de l’any 2021.
 Sortida:   
